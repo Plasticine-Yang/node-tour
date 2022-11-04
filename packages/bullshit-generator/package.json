@@ -1,0 +1,12 @@
+{
+  "name": "@node-tour/bullshit-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [
+    "bullshit-generator",
+    "狗屁不通文章生成器"
+  ],
+  "author": "Plasticine",
+  "license": "MIT"
+}
