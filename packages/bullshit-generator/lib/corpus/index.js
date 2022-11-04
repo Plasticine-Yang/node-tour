@@ -2,7 +2,7 @@ import { readFile } from 'fs'
 import { resolve } from 'path'
 import { fileURLToPath } from 'url'
 
-const ROOT_PATH = fileURLToPath(new URL('../../../', import.meta.url))
+const ROOT_PATH = fileURLToPath(new URL('../../../../', import.meta.url))
 const DATA_JSON_PATH = resolve(
   ROOT_PATH,
   'packages/bullshit-generator/corpus/data.json',
