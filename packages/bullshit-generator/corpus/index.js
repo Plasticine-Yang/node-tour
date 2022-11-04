@@ -8,7 +8,10 @@ const DATA_JSON_PATH = resolve(
   'packages/bullshit-generator/corpus/data.json',
 )
 
-const getCorpusData = () => {
+/**
+ * @returns {Promise<Corpus>} 物料数据
+ */
+function getCorpusData() {
   return new Promise((resolve, reject) => {
     readFile(DATA_JSON_PATH, { encoding: 'utf-8' }, (err, data) => {
       if (!err) {
