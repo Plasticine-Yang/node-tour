@@ -2,18 +2,15 @@ import { readFile } from 'fs'
 import { resolve } from 'path'
 import { fileURLToPath } from 'url'
 
-const ROOT_PATH = fileURLToPath(new URL('../../../../', import.meta.url))
-const DATA_JSON_PATH = resolve(
-  ROOT_PATH,
-  'packages/bullshit-generator/corpus/data.json',
-)
+const ROOT_PATH = fileURLToPath(new URL('../../', import.meta.url))
 
 /**
  * @returns {Promise<Corpus>} 物料数据
  */
-function getCorpusData() {
+function loadCorpusData(corpusPath) {
+  const dataPath = resolve(ROOT_PATH, corpusPath)
   return new Promise((resolve, reject) => {
-    readFile(DATA_JSON_PATH, { encoding: 'utf-8' }, (err, data) => {
+    readFile(dataPath, { encoding: 'utf-8' }, (err, data) => {
       if (!err) {
         resolve(JSON.parse(data))
       } else {
@@ -23,4 +20,4 @@ function getCorpusData() {
   })
 }
 
-export { getCorpusData }
+export { loadCorpusData }
