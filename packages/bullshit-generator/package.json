@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "keywords": [
     "bullshit-generator",
     "狗屁不通文章生成器"
