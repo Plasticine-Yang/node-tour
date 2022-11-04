@@ -1,4 +1,4 @@
-import { getCorpusData } from './corpus/index.js'
+import { getCorpusData } from './lib/corpus/index.js'
 import { createRandomPicker } from './lib/random/index.js'
 
 const main = async () => {
