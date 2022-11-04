@@ -28,7 +28,7 @@ function genSection(title, corpusData) {
       // 名人名言
       section += genSentence(pickFamousQuote, {
         said: pickSaid,
-        conslusion: pickConclusion,
+        conclusion: pickConclusion,
       })
     } else if (n < 50) {
       // 前置从句的废话 + 废话
