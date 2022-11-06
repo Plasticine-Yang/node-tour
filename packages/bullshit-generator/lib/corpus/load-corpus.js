@@ -1,7 +1,7 @@
 import { readFile } from 'fs'
 import { resolve } from 'path'
 
-import { ROOT_PATH } from './constants.js'
+import { ROOT_PATH } from '../../constants.js'
 
 /**
  * @returns {Promise<Corpus>} 物料数据

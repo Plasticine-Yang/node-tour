@@ -3,7 +3,7 @@ import { resolve } from 'path'
 
 import moment from 'moment'
 
-import { ROOT_PATH } from './constants.js'
+import { ROOT_PATH } from '../../constants.js'
 
 /**
  * @description 保存根据物料生成的废话文章
@@ -29,6 +29,8 @@ async function saveCorpus(title, article) {
   } catch (error) {
     console.error(`Save corpus: ${outputFilePath} failed -- ${error}`)
   }
+
+  return outputFilePath
 }
 
 export { saveCorpus }
