@@ -4,6 +4,9 @@
   "description": "",
   "main": "index.js",
   "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
   "keywords": [
     "bullshit-generator",
     "狗屁不通文章生成器"
