@@ -233,9 +233,10 @@
       <article></article>
     </main>
 
-    <script type="module">
-      import { genArticle } from '../lib/generator/index.js'
-      import { createRandomPicker } from '../lib/random/index.js'
+    <script src="../dist/index.js"></script>
+    <script>
+      const { genArticle, createRandomPicker, loadCorpusData } =
+        bullshitGenerator
 
       const main = () => {
         const $generateBtn = document.querySelector('#generate')
