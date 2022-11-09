@@ -16,6 +16,11 @@
         gap: 2rem;
       }
 
+      main article section {
+        text-indent: 2rem;
+        padding: 10px 0;
+      }
+
       input {
         outline: none;
         border: none;
@@ -118,6 +123,10 @@
           padding: 1rem 1rem;
         }
 
+        main {
+          padding: 0 1rem;
+        }
+
         /* 操作按钮容器布局 */
         .btn-container {
           flex-direction: column;
@@ -138,6 +147,10 @@
       @media screen and (min-width: 960px) {
         header {
           padding: 1rem 3rem;
+        }
+
+        main {
+          padding: 0 3rem;
         }
 
         /* 操作按钮容器布局 */
@@ -216,15 +229,35 @@
     </header>
 
     <!-- 文章展示区域 -->
-    <main></main>
+    <main>
+      <article></article>
+    </main>
 
-    <script>
-      ;(() => {
+    <script type="module">
+      import { genArticle } from '../lib/generator/index.js'
+      import { createRandomPicker } from '../lib/random/index.js'
+
+      const main = () => {
         const $generateBtn = document.querySelector('#generate')
         const $randomTitleBtn = document.querySelector('#random-title')
         const $wordsRange = document.querySelector('.words-range')
+        const $titleInput = document.querySelector('#title')
+        const $minWordsCount = document.querySelector('#min')
+        const $maxWordsCount = document.querySelector('#max')
+        const $article = document.querySelector('article')
 
-        const init = () => {
+        let corpusData = null
+        let pickTitle = null
+
+        const init = async () => {
+          // 初始化必要数据和函数
+          corpusData = await loadCorpus('../corpus/data.json')
+          pickTitle = createRandomPicker(corpusData.titles)
+
+          // 初始时先生成一个随即标题
+          handleRandomTitle()
+
+          // 绑定事件
           bindEvent()
         }
 
@@ -234,11 +267,27 @@
           $wordsRange.addEventListener('change', handleWordsRangeChange)
         }
 
+        const loadCorpus = async corpusUrl => {
+          return await (await fetch(corpusUrl)).json()
+        }
+
         // 生成文章
-        const handleGenerateArticle = () => {}
+        const handleGenerateArticle = async () => {
+          const title = $titleInput.value
+          const min = $minWordsCount.value
+          const max = $maxWordsCount.value
+          const corpusData = await loadCorpus('../corpus/data.json')
+
+          const article = genArticle(title, { corpusData, min, max })
+          $article.innerHTML = `<section>${article.join(
+            '</section><section>',
+          )}</section>`
+        }
 
         // 随机标题
-        const handleRandomTitle = () => {}
+        const handleRandomTitle = () => {
+          $titleInput.value = pickTitle()
+        }
 
         // 最小最大字数改变时
         const wordsRangeConfig = { min: 2000, max: 5000 }
@@ -249,7 +298,9 @@
         }
 
         init()
-      })()
+      }
+
+      main()
     </script>
   </body>
 </html>
