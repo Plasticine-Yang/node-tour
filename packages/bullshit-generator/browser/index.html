@@ -5,37 +5,213 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>废话文章生成器</title>
+    <style>
+      body {
+        transition: color 1s ease, background-color 1s ease;
+      }
+
+      header {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      input {
+        outline: none;
+        border: none;
+        border-bottom: 1px solid;
+        background-color: transparent;
+      }
+
+      button {
+        position: relative;
+        outline: none;
+        border: none;
+        cursor: pointer;
+        background-color: #409eff;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        overflow: hidden;
+      }
+
+      button::before {
+        position: absolute;
+        content: '';
+        inset: 0;
+      }
+
+      button:hover::before,
+      button:focus::before {
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+
+      button:active::before {
+        background-color: rgba(255, 255, 255, 0.3);
+      }
+
+      .words-range {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .words-range > div {
+        display: flex;
+      }
+
+      .btn-container {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .operation-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .title-container {
+        text-align: center;
+        width: 100%;
+      }
+
+      .title-container label {
+        padding-right: 1rem;
+        font-size: 1.5rem;
+      }
+
+      .title-container input {
+        width: 50%;
+        font-size: 1.5rem;
+        text-align: center;
+      }
+
+      /* 深色模式 */
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #21222c;
+          color: white;
+        }
+
+        input {
+          border-bottom-color: white;
+          color: white;
+        }
+      }
+
+      /* 浅色模式 */
+      @media (prefers-color-scheme: light) {
+        body {
+          background-color: #fff;
+          color: black;
+        }
+
+        input {
+          border-bottom-color: #222;
+          color: #222;
+        }
+      }
+
+      /* 宽度小于 960px */
+      @media screen and (max-width: 960px) {
+        header {
+          padding: 1rem 1rem;
+        }
+
+        /* 操作按钮容器布局 */
+        .btn-container {
+          flex-direction: column;
+        }
+
+        /* 字数范围选择器布局 */
+        .words-range > div {
+          flex-direction: column;
+        }
+
+        /* 标题宽度 */
+        .title-container input {
+          width: 70%;
+        }
+      }
+
+      /* 宽度大于 960px */
+      @media screen and (min-width: 960px) {
+        header {
+          padding: 1rem 3rem;
+        }
+
+        /* 操作按钮容器布局 */
+        .btn-container {
+          flex-direction: row;
+        }
+
+        /* 字数范围选择器布局 */
+        .words-range > div {
+          flex-direction: row;
+        }
+
+        .words-range > div label {
+          padding-right: 1rem;
+        }
+
+        /* 标题宽度 */
+        .title-container input {
+          width: 50%;
+        }
+      }
+    </style>
   </head>
   <body>
     <!-- 顶部操作区域 -->
     <header>
-      <section class="words-range">
-        <!-- 最小字数 -->
-        <div>
-          <label for="min">最小字数:</label>
-          <input
-            type="range"
-            id="min"
-            min="500"
-            max="5000"
-            step="100"
-            value="2000"
-          />
-          <span>2000</span>
-        </div>
+      <div class="operation-container">
+        <!-- 操作按钮 -->
+        <section class="btn-container">
+          <button id="generate">生成文章</button>
+          <button id="random-title">使用随机标题</button>
+        </section>
 
-        <div>
-          <label for="max">最大字数:</label>
-          <input
-            type="range"
-            id="max"
-            min="1000"
-            max="10000"
-            step="100"
-            value="5000"
-          />
-          <span>5000</span>
-        </div>
+        <!-- 字数范围 -->
+        <section class="words-range">
+          <!-- 最小字数 -->
+          <div>
+            <label for="min">最小字数:</label>
+
+            <div>
+              <input
+                type="range"
+                id="min"
+                min="500"
+                max="5000"
+                step="100"
+                value="2000"
+              />
+              <span>2000</span>
+            </div>
+          </div>
+
+          <div>
+            <label for="max">最大字数:</label>
+
+            <div>
+              <input
+                type="range"
+                id="max"
+                min="1000"
+                max="10000"
+                step="100"
+                value="5000"
+              />
+              <span>5000</span>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- 标题 -->
+      <section class="title-container">
+        <label for="title">标题:</label>
+        <input type="text" id="title" />
       </section>
     </header>
 
@@ -44,6 +220,8 @@
 
     <script>
       ;(() => {
+        const $generateBtn = document.querySelector('#generate')
+        const $randomTitleBtn = document.querySelector('#random-title')
         const $wordsRange = document.querySelector('.words-range')
 
         const init = () => {
@@ -51,8 +229,16 @@
         }
 
         const bindEvent = () => {
+          $generateBtn.addEventListener('click', handleGenerateArticle)
+          $randomTitleBtn.addEventListener('click', handleRandomTitle)
           $wordsRange.addEventListener('change', handleWordsRangeChange)
         }
+
+        // 生成文章
+        const handleGenerateArticle = () => {}
+
+        // 随机标题
+        const handleRandomTitle = () => {}
 
         // 最小最大字数改变时
         const wordsRangeConfig = { min: 2000, max: 5000 }
